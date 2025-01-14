@@ -1,0 +1,56 @@
+amogus = game:GetService('Players')
+
+local function epic(model, name, espcol, textcolor)
+	espcol = espcol or Color3.fromRGB(103, 38, 168)
+	textcolor = textcolor or Color3.fromRGB(249, 249, 249)
+	
+	local espDetected = false
+	if model and model.Parent then
+		for i, v in pairs(model:GetChildren()) do
+			if v and v.Parent and v:IsA("Folder") and string.match(string.lower(v:GetFullName()), "esp") then
+				espDetected = true
+			end
+		end
+	end
+
+	if not espDetected then
+		local espfolder = Instance.new("Folder", model)
+		espfolder.Name = "/e ESP"..model.Name
+
+		local dsnfjhasdb = Instance.new("BillboardGui", espfolder)
+		dsnfjhasdb.AlwaysOnTop = true
+		dsnfjhasdb.MaxDistance = 100
+		dsnfjhasdb.Size = UDim2.new(0, 200,0, 50)
+		dsnfjhasdb.StudsOffset = Vector3.new(0, 1, 0)
+		dsnfjhasdb.Adornee = model
+
+		local fsduafn
+		if name ~= "" then
+			fsduafn = Instance.new("TextLabel", dsnfjhasdb)
+			fsduafn.BackgroundTransparency = 1
+			fsduafn.Text = name
+			fsduafn.TextColor3 = textcolor
+			fsduafn.TextScaled = true
+			fsduafn.Size = UDim2.new(1, 0, 1, 0)
+		end
+
+		local ez = Instance.new('Highlight', espfolder)
+		ez.FillColor = espcol
+		ez.OutlineTransparency = 1
+		ez.FillTransparency = 0.4
+		ez.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+		ez.Adornee = model
+	end
+end
+
+amogus.PlayerAdded:Connect(function(e)
+	e.CharacterAdded:Connect(function(character)
+		for _,v in pairs(character:GetChildren()) do
+			if v:IsA("BasePart") and v.Name == "Head" then
+				epic(v, e.Name)
+			elseif v:IsA("BasePart") then
+				epic(v, "")
+			end
+		end
+	end)
+end)
